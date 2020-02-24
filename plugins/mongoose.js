@@ -4,6 +4,7 @@ const fp = require('fastify-plugin')
 const User = mongoose.model('user')
 const Project = mongoose.model('project')
 const Task = mongoose.model('task')
+const Log = mongoose.model('log')
 
 module.exports = fp(function(fastify, opts, next) {
   mongoose.connect(fastify.MONGOCONNECTION, {
@@ -15,6 +16,7 @@ module.exports = fp(function(fastify, opts, next) {
       fastify.decorate('users', User)
       fastify.decorate('projects', Project)
       fastify.decorate('tasks', Task)
+      fastify.decorate('log', Log)
       next()
     })
     .catch(err => {
