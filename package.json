@@ -19,8 +19,10 @@
     "fastify": "^2.0.0",
     "fastify-autoload": "^1.0.0",
     "fastify-cli": "^1.4.0",
+    "fastify-cookie": "^3.6.0",
     "fastify-plugin": "^1.5.0",
-    "mongoose": "^5.9.2"
+    "mongoose": "^5.9.2",
+    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "tap": "^12.5.3"
