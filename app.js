@@ -3,10 +3,16 @@
 const path = require('path')
 const AutoLoad = require('fastify-autoload')
 
-module.exports = function (fastify, opts, next) {
+module.exports = function(fastify, opts, next) {
   // Place here your custom code!
 
+  // Load Schemas for Mongoose
   require('./schemas/User.js')
+  require('./schemas/Task.js')
+  require('./schemas/Project.js')
+
+  // Register
+  fastify.register(require('fastify-cookie'))
 
   // Do not touch the following lines
 
