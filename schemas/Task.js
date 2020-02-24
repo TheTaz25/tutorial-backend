@@ -11,7 +11,8 @@ const taskSchema = new Schema({
     type: String,
     default: 'notstarted'
   },
-  depends: String
+  depends: String,
+  timespent: Number
 })
 
 mongoose.model('task', taskSchema)
