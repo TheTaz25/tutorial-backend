@@ -3,13 +3,11 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 module.exports = function(fastify, opts, next) {
-  fastify.post('/api/auth/register', function(req, res) {
-    // Check if username and password field are set...
-    if (!req.body.username || !req.body.password) {
-      res.code(400)
-        .send('Need fields username and password')
-      return
+  fastify.post('/api/auth/register', {
+    schema: {
+      body: fastify.userAndPassInBody
     }
+  }, function(req, res) {
     // Check if Username does not exist
     fastify.users.doesUsernameAlreadyExist(req.body.username, (userExists, err) => {
       if (err) {
@@ -53,13 +51,11 @@ module.exports = function(fastify, opts, next) {
     })
   })
 
-  fastify.put('/api/auth/login', function(req, res) {
-    // Check if username and password are set
-    if (!req.body.username || !req.body.password) {
-      res.code(400)
-        .send('Missing username/password field')
-      return
+  fastify.put('/api/auth/login', {
+    schema: {
+      body: fastify.userAndPassInBody
     }
+  }, function(req, res) {
     fastify.users.findOne({
         username: req.body.username
       })
@@ -132,4 +128,3 @@ module.exports = function(fastify, opts, next) {
 
   next()
 }
-
