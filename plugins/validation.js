@@ -22,17 +22,25 @@ module.exports = fp(function(fastify, opts, next) {
     required: ['members', 'title'],
     properties: {
       members: {
-        type: 'array'
+        type: 'array',
+        maxItems: 1
       },
       title: {
         type: 'string'
       },
       description: {
         type: 'string'
-      },
-      completed: {
-        type: 'boolean'
       }
+    }
+  })
+
+  // Restrict query parameters when querying for projects
+  // TODO: After being sure everyhing works, enable strictmode
+  fastify.decorate('projectQueryRestriction', {
+    type: 'object',
+    strictKeywords: false,
+    properties: {
+
     }
   })
 
