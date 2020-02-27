@@ -84,7 +84,8 @@ module.exports = function(fastify, opts, next) {
             })
             // Send UserData
             res.send({
-              username: req.body.username
+              username: req.body.username,
+              id: user._id
             })
             return
           })
