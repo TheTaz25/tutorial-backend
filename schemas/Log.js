@@ -5,9 +5,18 @@ const {
 
 const logSchema = new Schema({
   timestamp: Number,
-  project: String,
-  task: String,
-  user: String,
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: 'project'
+  },
+  task: {
+    type: Schema.Types.ObjectId,
+    ref: 'task'
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'user'
+  },
   description: String
 })
 

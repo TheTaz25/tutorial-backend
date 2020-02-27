@@ -5,14 +5,21 @@ const {
 } = mongoose
 
 const projectSchema = new Schema({
-  members: [],
+  members: [{
+    type: Schema.Types.ObjectId,
+    ref: 'member'
+  }],
   title: String,
   description: String,
-  tasks: [],
+  tasks: [{
+    type: Schema.Types.ObjectId,
+    ref: 'task'
+  }],
   completed: {
     type: Boolean,
     default: false
-  }
+  },
+  lastmodified: Number
 })
 
 mongoose.model('project', projectSchema)

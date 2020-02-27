@@ -4,15 +4,22 @@ const {
 } = mongoose
 
 const taskSchema = new Schema({
-  owner: String,
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'user'
+  },
   title: String,
   description: String,
   state: {
     type: String,
     default: 'notstarted'
   },
-  depends: String,
-  timespent: Number
+  depends: {
+    type: Schema.Types.ObjectId,
+    ref: 'task'
+  },
+  timespent: Number,
+  lastmodified: Number
 })
 
 mongoose.model('task', taskSchema)
