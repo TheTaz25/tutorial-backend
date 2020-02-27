@@ -11,6 +11,7 @@ module.exports = function(fastify, opts, next) {
   require('./schemas/Task.js')
   require('./schemas/Project.js')
   require('./schemas/Log.js')
+  require('./schemas/Member.js')
 
   // Register
   fastify.register(require('fastify-cookie'))
