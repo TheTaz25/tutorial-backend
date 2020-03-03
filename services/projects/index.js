@@ -30,7 +30,7 @@ module.exports = function(fastify, opts, next) {
       }
 
       // Create new Project
-      const newProject = new fasitfy.projects({
+      const newProject = new fastify.projects({
         title,
         description: description || '',
         members: [projectLeader._id],
@@ -67,17 +67,63 @@ module.exports = function(fastify, opts, next) {
       query
     } = req
 
-    res.send()
+    const narrowToMembers = req.user.isAdmin ? undefined : {
+      "members": {
+        $in: req.user._id
+      }
+    }
+
+    fastify.projects
+      .find({
+        ...narrowToMembers,
+        ...query
+      })
+      .select('-members -tasks')
+      .lean()
+      .then(projects => {
+        res.send(projects)
+      })
+      .catch(err => {
+        fastify.log.warn(err)
+        res.code(500)
+          .send("Internal Server Error")
+      })
   })
 
   // Get a specific project
-  fastify.get('/api/projects/:projectId', {}, (req, res) => {
-    res.send()
+  fastify.get('/api/projects/:projectId', {
+    preHandler: [
+      fastify.isUserLoggedIn,
+      fastify.isUserPartOfProject
+    ],
+    schema: {
+      params: fastify.needsProjectId
+    }
+  }, (req, res) => {
+    if (req.project)
+      res.send(req.project)
+    else
+      res.code(404)
+      .send("Project not found")
   })
 
   // Get all tasks in a project
-  fastify.get('/api/projects/:projectId/tasks', {}, (req, res) => {
-    res.send()
+  fastify.get('/api/projects/:projectId/tasks', {
+    preHandler: [
+      fastify.isUserLoggedIn,
+      fastify.isUserPartOfProject
+    ],
+    schema: {
+      params: fastify.needsProjectId
+    }
+  }, (req, res) => {
+    if (req.project)
+      res.send({
+        tasks: [...req.project.tasks]
+      })
+    else
+      res.code(404)
+      .send('Project not found')
   })
 
   // Set Information on a project
