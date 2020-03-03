@@ -36,11 +36,13 @@ module.exports = fp(function(fastify, opts, next) {
 
   // Restrict query parameters when querying for projects
   // TODO: After being sure everyhing works, enable strictmode
-  fastify.decorate('projectQueryRestriction', {
+  fastify.decorate('needsProjectId', {
     type: 'object',
-    strictKeywords: false,
+    required: ['projectId'],
     properties: {
-
+      projectId: {
+        type: 'string'
+      }
     }
   })
 
@@ -48,7 +50,9 @@ module.exports = fp(function(fastify, opts, next) {
   fastify.decorate('taskResponse', {
     type: 'object',
     properties: {
-      _id: 'string'
+      _id: {
+        type: 'string'
+      }
     }
   })
 
@@ -58,7 +62,9 @@ module.exports = fp(function(fastify, opts, next) {
   fastify.decorate('projectResponse', {
     type: 'object',
     properties: {
-      _id: 'string'
+      _id: {
+        type: 'string'
+      }
     }
   })
 
