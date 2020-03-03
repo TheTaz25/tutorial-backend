@@ -127,12 +127,28 @@ module.exports = function(fastify, opts, next) {
   })
 
   // Set Information on a project
-  fastify.put('/api/projects/:projectId', {}, (req, res) => {
+  fastify.put('/api/projects/:projectId', {
+    preHandler: [
+      fastify.isUserLoggedIn,
+      fastify.isUserPartOfProject
+    ],
+    schema: { // TODO: needs body-schema-validator
+      params: fastify.needsProjectId
+    }
+  }, (req, res) => {
+    /*
+      CRUD ALL -> PROJECT-LEADER-ONLY
+      NEW TASKS -> DEVS
+      NO PUT FOR USERS
+    */
     res.send()
   })
 
   // Delete a project forever
   fastify.delete('/api/projects/:projectId', {}, (req, res) => {
+    /*
+      CRUD ALL -> PROJECT-LEADER-ONLY
+    */
     res.send()
   })
 
