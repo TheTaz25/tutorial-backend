@@ -9,7 +9,7 @@
   "scripts": {
     "test": "tap test/**/*.test.js",
     "start": "fastify start -l info app.js",
-    "dev": "fastify start -w -l info -P app.js"
+    "dev": "ndb fastify start -w -l info -P app.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
     "sha.js": "^2.4.11"
   },
   "devDependencies": {
+    "ndb": "^1.1.5",
     "tap": "^12.5.3"
   }
 }
