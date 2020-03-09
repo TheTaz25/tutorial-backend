@@ -59,6 +59,10 @@ module.exports = fp(function(fastify, opts, next) {
             memberid: {
               type: 'string'
             },
+            role: {
+              type: 'string',
+              enum: ['user', 'projectleader', 'developer']
+            },
             action: {
               type: 'string',
               enum: ['ADD', 'DELETE']
