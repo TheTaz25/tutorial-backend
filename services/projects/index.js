@@ -47,7 +47,7 @@ module.exports = function(fastify, opts, next) {
               _id: projectLeader._id
             })
             .then(err => {
-              fastify.log.error('Could not delete projectLeader after unsuccessfull project creation with id' + projectLeader._id)
+              req.log.error('Could not delete projectLeader after unsuccessfull project creation with id' + projectLeader._id)
             })
           return
         }
@@ -84,7 +84,7 @@ module.exports = function(fastify, opts, next) {
         res.send(projects)
       })
       .catch(err => {
-        fastify.log.warn(err)
+        req.log.warn(err)
         res.code(500)
           .send("Internal Server Error")
       })
@@ -130,18 +130,36 @@ module.exports = function(fastify, opts, next) {
   fastify.put('/api/projects/:projectId', {
     preHandler: [
       fastify.isUserLoggedIn,
-      fastify.isUserPartOfProject
+      fastify.isUserPartOfProject,
+      fastify.assignUserRole
     ],
-    schema: { // TODO: needs body-schema-validator
-      params: fastify.needsProjectId
+    schema: {
+      params: fastify.needsProjectId,
+      body: fastify.updateProjectPolicy
     }
   }, (req, res) => {
     /*
       CRUD ALL -> PROJECT-LEADER-ONLY
-      NEW TASKS -> DEVS
+      NEW TASKS -> DEVS (also: not here in this route)
       NO PUT FOR USERS
     */
-    res.send()
+   // Check if role is Project-Leader
+   const { USERROLES } = fastify
+   const { project, body } = req
+   if(!(req.roles === USERROLES.PROJECTLEADER)) {
+     res.code(403).send('Only Projectleader of this project may change project information')
+     return
+   }
+   // Adjust
+   
+   // Update timestamp
+   project.lastmodified = Date.now()
+   // Save
+   project.save(err => {
+
+     // Done
+     res.send()
+   })
   })
 
   // Delete a project forever
