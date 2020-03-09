@@ -92,7 +92,7 @@ module.exports = function(fastify, opts, next) {
         })
       })
       .catch(err => {
-        fastify.log.error(err)
+        req.log.error(err)
         res.code(500)
           .send('Internal Server Error (Failed to Fetch)')
         return
@@ -120,7 +120,7 @@ module.exports = function(fastify, opts, next) {
         })
       })
       .catch(err => {
-        fastify.log.error(err)
+        req.log.error(err)
         res.code(500)
           .send('Internal Server Error (Failed to Fetch)')
         return
