@@ -46,6 +46,41 @@ module.exports = fp(function(fastify, opts, next) {
     }
   })
 
+  // Only allow certain fields for the update of project information
+  fastify.decorate('updateProjectPolicy', {
+    type: 'object',
+    properties: {
+
+      members: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            memberid: {
+              type: 'string'
+            },
+            action: {
+              type: 'string',
+              enum: ['ADD', 'DELETE']
+            }
+          }
+        }
+      },
+
+      title: {
+        type: 'string'
+      },
+
+      description: {
+        type: 'string'
+      },
+
+      completed: {
+        type: 'boolean'
+      }
+    }
+  })
+
   // On how the response should look like when requesting a task
   fastify.decorate('taskResponse', {
     type: 'object',
