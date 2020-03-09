@@ -35,13 +35,16 @@ module.exports = fp(function(fastify, opts, next) {
         _id: req.params.projectId
       })
       .lean(req.raw.method === "GET")
+      .populate('members')
       .then(project => {
         if (!project) {
           res.code(404)
           done(new Error('Could not find project'))
         } else {
-          if (req.user.isAdmin || project.members.includes(req.user._id)) {
+          const memberInProject = project.members.find(member => member.memberId === req.user._id)
+          if (req.user.isAdmin || memberInProject) {
             req.project = project
+            req.role = memberInProject.role
             done()
           } else {
             res.code(403)
