@@ -36,6 +36,7 @@ module.exports = fp(function(fastify, opts, next) {
       })
       .lean(req.raw.method === "GET")
       .populate('members')
+      .populate('tasks')
       .then(project => {
         if (!project) {
           res.code(404)
