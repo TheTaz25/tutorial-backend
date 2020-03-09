@@ -1,5 +1,5 @@
 # tutorial-backend
-Sample Backend with fastify and multiple routes, depeniding on the situation
+Sample Backend with fastify and multiple routes, depending on the situation
 
-Used for tutorials
-Security related are tolerable to this project!
+Used for tutorials  
+Security related topics are tolerable to this project!
