@@ -1,6 +1,14 @@
 module.exports = function(fastify, opts, next) {
   // Create a new task and assign it to a project
-  fastify.post('/api/tasks', {}, (req, res) => {
+  fastify.post('/api/tasks', {
+    schema: {
+      body: fastify.taskCreation
+    },
+    preHandler: [
+      fastify.isUserLoggedIn,
+      fastify.isUserPartOfProject
+    ]
+  }, (req, res) => {
     res.send()
   })
 

@@ -85,6 +85,32 @@ module.exports = fp(function(fastify, opts, next) {
     }
   })
 
+  fastify.decorate('taskCreation', {
+    type: 'object',
+    required: ['title', 'description', 'projectId'],
+    properties: {
+      projectId: {
+        type: 'string'
+      },
+      owner: {
+        type: 'string'
+      },
+      title: {
+        type: 'string'
+      },
+      description: {
+        type: 'string'
+      },
+      state: {
+        type: 'string',
+        enum: ['notstarted', 'started', 'waiting', 'testing', 'paused']
+      },
+      depends: {
+        type: 'string'
+      }
+    }
+  })
+
   // On how the response should look like when requesting a task
   fastify.decorate('taskResponse', {
     type: 'object',

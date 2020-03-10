@@ -18,7 +18,10 @@ const taskSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'task'
   },
-  timespent: Number,
+  timespent: {
+    type: Number,
+    default: 0
+  },
   lastmodified: Number
 })
 
