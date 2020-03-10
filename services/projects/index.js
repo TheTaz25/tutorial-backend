@@ -244,12 +244,16 @@ module.exports = function(fastify, opts, next) {
         .send('Action not allowed')
     }
 
-    // TODO: Delete members and tasks...
     // Remember: We are working with a not-lean variant of the ressource (is a mongoose object more or
     // less) due to delete method
     req.project
       .depopulate('members')
       .depopulate('tasks')
+
+    const { members, tasks } = req.project
+
+    fastify.members.deleteMany({ _id: members })
+    fastify.tasks.deleteMany({ _id: tasks })
 
     delete req.project
 
