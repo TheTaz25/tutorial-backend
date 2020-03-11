@@ -14,6 +14,15 @@ const taskSchema = new Schema({
     type: String,
     default: 'notstarted'
   },
+  dod: [{
+    item: {
+      type: String,
+      checked: {
+        type: Boolean,
+        default: false
+      }
+    }
+  }],
   depends: {
     type: Schema.Types.ObjectId,
     ref: 'task'
