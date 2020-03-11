@@ -15,12 +15,11 @@ const taskSchema = new Schema({
     default: 'notstarted'
   },
   dod: [{
-    item: {
-      type: String,
-      checked: {
-        type: Boolean,
-        default: false
-      }
+    id: Number,
+    item: String,
+    checked: {
+      type: Boolean,
+      default: false
     }
   }],
   depends: {
