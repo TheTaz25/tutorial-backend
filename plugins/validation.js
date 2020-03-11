@@ -101,6 +101,20 @@ module.exports = fp(function(fastify, opts, next) {
       description: {
         type: 'string'
       },
+      dod: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            item: {
+              type: 'string'
+            },
+            checked: {
+              type: 'boolean'
+            }
+          }
+        }
+      },
       state: {
         type: 'string',
         enum: ['notstarted', 'started', 'waiting', 'testing', 'paused']
