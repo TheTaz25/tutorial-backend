@@ -21,6 +21,8 @@ module.exports = function(fastify, opts, next) {
       role: fastify.USERROLES.PROJECTLEADER
     })
 
+    // TODO: if there are more members, create them and assign them later on
+
     // Save ProjectLeader
     projectLeader.save(err => {
       if (err) {
@@ -117,6 +119,8 @@ module.exports = function(fastify, opts, next) {
       params: fastify.needsProjectId
     }
   }, (req, res) => {
+
+    // TODO: Query for those tasks and then send them
     if (req.project)
       res.send({
         tasks: [...req.project.tasks]
@@ -250,10 +254,17 @@ module.exports = function(fastify, opts, next) {
       .depopulate('members')
       .depopulate('tasks')
 
-    const { members, tasks } = req.project
+    const {
+      members,
+      tasks
+    } = req.project
 
-    fastify.members.deleteMany({ _id: members })
-    fastify.tasks.deleteMany({ _id: tasks })
+    fastify.members.deleteMany({
+      _id: members
+    })
+    fastify.tasks.deleteMany({
+      _id: tasks
+    })
 
     delete req.project
 
