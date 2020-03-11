@@ -87,11 +87,8 @@ module.exports = fp(function(fastify, opts, next) {
 
   fastify.decorate('taskCreation', {
     type: 'object',
-    required: ['title', 'description', 'projectId'],
+    required: ['title', 'description'],
     properties: {
-      projectId: {
-        type: 'string'
-      },
       owner: {
         type: 'string'
       },
@@ -111,6 +108,9 @@ module.exports = fp(function(fastify, opts, next) {
             },
             checked: {
               type: 'boolean'
+            },
+            id: {
+              type: 'number'
             }
           }
         }
